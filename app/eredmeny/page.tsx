@@ -93,7 +93,7 @@ export default function EredmenyPage() {
           </span>
         </div>
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-          AI Második Vélemény
+          AI orvosi második vélemény
         </h1>
         <p className="text-slate-500 text-base leading-relaxed">
           Az alábbi elemzés mesterséges intelligencia alapján készült.

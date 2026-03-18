@@ -3,9 +3,9 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Adatvédelmi Tájékoztató – GDPR megfelelő adatkezelés',
   description:
-    'A MásodikVélemény platform adatvédelmi tájékoztatója. Nem tárolunk személyes egészségügyi adatot. GDPR (EU) 2016/679 szerint működünk. Olvasd el, hogyan kezeljük az adataidat.',
+    'A Diagnózisom.hu platform adatvédelmi tájékoztatója. Nem tárolunk személyes egészségügyi adatot. GDPR (EU) 2016/679 szerint működünk. Olvasd el, hogyan kezeljük az adataidat.',
   alternates: {
-    canonical: 'https://masodikvelemeny.hu/adatvedelem',
+    canonical: 'https://diagnozisom.hu/adatvedelem',
   },
   robots: {
     index: true,
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 const privacySchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  name: 'Adatvédelmi Tájékoztató – MásodikVélemény',
-  url: 'https://masodikvelemeny.hu/adatvedelem',
+  name: 'Adatvédelmi Tájékoztató – Diagnózisom',
+  url: 'https://diagnozisom.hu/adatvedelem',
   description: 'GDPR-megfelelő adatvédelmi tájékoztató. Az egészségügyi adatokat nem tároljuk.',
   inLanguage: 'hu-HU',
   about: {
@@ -45,7 +45,7 @@ const sections = [
   },
   {
     title: '5. Az Ön jogai (GDPR)',
-    body: 'Az (EU) 2016/679 (GDPR) rendelet alapján Önt hozzáférési, helyesbítési, törlési, adathordozhatósági és tiltakozási jog illeti meg. Mivel személyes egészségügyi adatot nem tárolunk, törlési kérelem benyújtása technikailag nem releváns — az adatok az elemzés befejezése után azonnal törlésre kerülnek. Adatvédelmi kérdéseivel forduljon hozzánk: adatvedelem@masodikvelemeny.hu',
+    body: 'Az (EU) 2016/679 (GDPR) rendelet alapján Önt hozzáférési, helyesbítési, törlési, adathordozhatósági és tiltakozási jog illeti meg. Mivel személyes egészségügyi adatot nem tárolunk, törlési kérelem benyújtása technikailag nem releváns — az adatok az elemzés befejezése után azonnal törlésre kerülnek. Adatvédelmi kérdéseivel forduljon hozzánk: adatvedelem@diagnozisom.hu',
   },
   {
     title: '6. Adatbiztonság',
@@ -80,7 +80,7 @@ export default function AdatvedelemPage() {
           <div>
             <p className="font-bold text-slate-900 mb-1">Alapelv: ha nem tároljuk, nem szivároghat ki.</p>
             <p className="text-sm text-slate-600 leading-relaxed">
-              A MásodikVélemény adatvédelmi architektúrájának alapja, hogy
+              A Diagnózisom adatvédelmi architektúrájának alapja, hogy
               egészségügyi adatokat egyáltalán nem tárolunk. Nincs adatbázis,
               nincs napló, nincs felhőtároló — az adatok csak az elemzés idejére
               kerülnek memóriában feldolgozásra.
@@ -99,7 +99,7 @@ export default function AdatvedelemPage() {
 
         <div className="mt-10 p-6 bg-slate-50 rounded-2xl border border-slate-200">
           <p className="text-sm text-slate-500 leading-relaxed">
-            <strong>Kapcsolat:</strong> adatvedelem@masodikvelemeny.hu ·{' '}
+            <strong>Kapcsolat:</strong> adatvedelem@diagnozisom.hu ·{' '}
             <strong>Felügyelet:</strong> Nemzeti Adatvédelmi és Információszabadság Hatóság (NAIH),{' '}
             <a href="https://naih.hu" className="underline hover:text-slate-700" target="_blank" rel="noopener noreferrer">
               naih.hu

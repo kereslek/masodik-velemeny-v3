@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: 'Értsd meg a diagnózisodat – AI orvosi segítség, lelet magyarázat, második vélemény',
   description:
     'Nem érted az orvosi leleteidet vagy a diagnózisodat? Kétséged van? Töltsd fel PDF-ben vagy képként, írd le tüneteidet — az AI közérthetően elmagyarázza és második véleményt ad. Ingyenes, anonim.',
-  alternates: { canonical: 'https://masodikvelemeny.hu' },
+  alternates: { canonical: 'https://diagnozisom.hu' },
   openGraph: {
-    title: 'Értsd meg a diagnózisodat | MásodikVélemény – AI orvosi segítség',
+    title: 'Értsd meg a diagnózisodat | Diagnózisom – AI orvosi segítség',
     description:
       'Lelet értelmezés, diagnózis magyarázat, orvosi második vélemény AI-tól — azonnal, ingyen, anonim. Töltsd fel a dokumentumaidat és kapj választ.',
-    url: 'https://masodikvelemeny.hu',
+    url: 'https://diagnozisom.hu',
     type: 'website',
   },
 }
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
 const medicalPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'MedicalWebPage',
-  name: 'MásodikVélemény – Diagnózis megértés, lelet értelmezés, AI orvosi második vélemény',
-  url: 'https://masodikvelemeny.hu',
+  name: 'Diagnózisom.hu – Diagnózis megértés, lelet értelmezés, AI orvosi második vélemény',
+  url: 'https://diagnozisom.hu',
   description:
     'Magyar pácienseknek szánt AI platform, amely segít megérteni a diagnózisokat, értelmezi az orvosi leleteket és szakkifejezéseket, valamint orvosi második véleményt nyújt.',
   inLanguage: 'hu-HU',
@@ -52,7 +52,7 @@ const faqSchema = {
       name: 'Mit tegyek, ha nem értem a diagnózisomat?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Töltsd fel a diagnózist tartalmazó dokumentumot PDF-ben vagy fotóban a MásodikVélemény platformra, és írd le röviden a helyzetedet. Az AI elmagyarázza a diagnózis jelentését, a benne lévő szakkifejezéseket, és segít megérteni, mit jelent ez a mindennapi életedben. Ezen felül javaslatot ad arra is, milyen kérdéseket tegyél fel az orvosoddal.',
+        text: 'Töltsd fel a diagnózist tartalmazó dokumentumot PDF-ben vagy fotóban a Diagnózisom.hu platformra, és írd le röviden a helyzetedet. Az AI elmagyarázza a diagnózis jelentését, a benne lévő szakkifejezéseket, és segít megérteni, mit jelent ez a mindennapi életedben. Ezen felül javaslatot ad arra is, milyen kérdéseket tegyél fel az orvosoddal.',
       },
     },
     {
@@ -60,7 +60,7 @@ const faqSchema = {
       name: 'Kételyem van az orvosom diagnózisával kapcsolatban. Mit tehetek?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Teljesen normális és egészséges, ha valaki második véleményt kér a diagnózisára. A MásodikVélemény platformon leírhatod a tüneteidet és feltöltheted a dokumentumaidat, és az AI független elemzést ad. Ha az AI is hasonló következtetésre jut, az megerősítést adhat. Ha eltérés van, az segíthet pontosabb kérdéseket feltenni az orvosoddal. A platform nem helyettesíti a szakorvosi vizsgálatot, de segít tájékozottabb páciensként megjelenni a rendelőben.',
+        text: 'Teljesen normális és egészséges, ha valaki második véleményt kér a diagnózisára. A Diagnózisom.hu platformon leírhatod a tüneteidet és feltöltheted a dokumentumaidat, és az AI független elemzést ad. Ha az AI is hasonló következtetésre jut, az megerősítést adhat. Ha eltérés van, az segíthet pontosabb kérdéseket feltenni az orvosoddal. A platform nem helyettesíti a szakorvosi vizsgálatot, de segít tájékozottabb páciensként megjelenni a rendelőben.',
       },
     },
     {
@@ -84,7 +84,7 @@ const faqSchema = {
       name: 'Mennyibe kerül és kell-e regisztrálni?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'A MásodikVélemény teljesen ingyenes és regisztrációt sem igényel. Azonnal használhatod, személyes adatok megadása nélkül.',
+        text: 'A Diagnózisom.hu teljesen ingyenes és regisztrációt sem igényel. Azonnal használhatod, személyes adatok megadása nélkül.',
       },
     },
     {
@@ -126,8 +126,8 @@ const howToSchema = {
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'MásodikVélemény AI Orvosi Asszisztens',
-  url: 'https://masodikvelemeny.hu',
+  name: 'Diagnózisom AI Orvosi Asszisztens',
+  url: 'https://diagnozisom.hu',
   serviceType: 'Health Information Service',
   description: 'Három fő szolgáltatás: (1) Orvosi leletek és diagnózisok közérthető magyarázata, (2) Orvosi szakkifejezések értelmezése, (3) AI-alapú orvosi második vélemény tünetek és dokumentumok alapján.',
   hasOfferCatalog: {
@@ -157,7 +157,7 @@ const serviceSchema = {
       },
     ],
   },
-  provider: { '@type': 'Organization', name: 'MásodikVélemény', url: 'https://masodikvelemeny.hu' },
+  provider: { '@type': 'Organization', name: 'Diagnózisom', url: 'https://diagnozisom.hu' },
   areaServed: { '@type': 'Country', name: 'Hungary' },
   inLanguage: 'hu-HU',
   audience: { '@type': 'Audience', audienceType: 'Patient' },
@@ -220,7 +220,7 @@ export default function HomePage() {
                 },
                 {
                   icon: FileSearch,
-                  title: 'Második vélemény',
+                  title: 'AI második vélemény',
                   body: 'Töltsd fel a tüneteidet és dokumentumaidat, és kapj strukturált AI orvosi második véleményt másodpercek alatt.',
                 },
               ].map(({ icon: Icon, title, body }) => (
@@ -324,7 +324,7 @@ export default function HomePage() {
                       számokkal, amiket nehéz értelmezni orvosi végzettség nélkül.
                     </p>
                     <p>
-                      A MásodikVélemény platform lehetővé teszi, hogy PDF-ben vagy képként
+                      A Diagnózisom.hu platform lehetővé teszi, hogy PDF-ben vagy képként
                       feltöltsd a dokumentumodat. Az AI <strong>közérthető, hétköznapi
                       magyarsággal</strong> elmagyarázza a lelet tartalmát: mit jelentenek a
                       számok, mi az eltérés a normáltól, melyek a lényeges részek, és mire érdemes
@@ -383,7 +383,7 @@ export default function HomePage() {
                       mikor kell ismét orvoshoz menni, vagy mire figyelj a tünetek változásánál.
                     </p>
                     <p>
-                      A MásodikVélemény platform segít ebben a „köztes térben": felvilágosít,
+                      A Diagnózisom.hu platform segít ebben a „köztes térben": felvilágosít,
                       kontextusba helyez, <strong>kérdéseket fogalmaz meg a következő
                       orvosihoz</strong>, és segít megalapozottabb döntést hozni a saját
                       egészségeddel kapcsolatban. Tájékozottabb páciens jobb kérdéseket tesz
@@ -408,7 +408,7 @@ export default function HomePage() {
                 ászati fotók) elemezni. A modell nem „gugliz" — valóban érti a kontextust.
               </p>
               <p>
-                A MásodikVélemény célja nem az, hogy az orvost helyettesítse, hanem hogy{' '}
+                A Diagnózisom.hu célja nem az, hogy az orvost helyettesítse, hanem hogy{' '}
                 <strong>betöltse azt a részt</strong>, amit az orvos nem tud betölteni: az
                 otthoni magyarázatot, a türelmes kérdezés lehetőségét, a kételyek megvizsgálását
                 és a következő orvosihoz való felkészülést. Ingyenes, azonnali és teljesen anonim.

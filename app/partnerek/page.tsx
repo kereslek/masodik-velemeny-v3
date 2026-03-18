@@ -6,27 +6,27 @@ export const metadata: Metadata = {
   description:
     'Orvosoknak, egészségügyi intézményeknek és klinikáknak szóló partnerprogram. Elérjük a tüneteikkel aktívan foglalkozó pácienseket. GDPR-megfelelő, mérhető eredmények.',
   alternates: {
-    canonical: 'https://masodikvelemeny.hu/partnerek',
+    canonical: 'https://diagnozisom.hu/partnerek',
   },
   openGraph: {
-    title: 'Orvosi Partnereknek | MásodikVélemény',
+    title: 'Orvosi Partnereknek – Csatlakozzon a Diagnózisom.hu partnerhálózatához',
     description:
-      'Csatlakozzon a MásodikVélemény orvosi partnerhálózatához. Minősített páciensek, GDPR-megfelelőség, mérhető eredmények.',
-    url: 'https://masodikvelemeny.hu/partnerek',
+      'Csatlakozzon a Diagnózisom.hu orvosi partnerhálózatához. Minősített páciensek, GDPR-megfelelőség, mérhető eredmények.',
+    url: 'https://diagnozisom.hu/partnerek',
   },
 }
 
 const partnerSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'MásodikVélemény Orvosi Partnerprogram',
-  url: 'https://masodikvelemeny.hu/partnerek',
+  name: 'Diagnózisom Orvosi Partnerprogram',
+  url: 'https://diagnozisom.hu/partnerek',
   description:
     'Orvosoknak és egészségügyi intézményeknek szóló partnerprogram. Minősített páciensek elérése AI-alapú egészségügyi platformon keresztül.',
   provider: {
     '@type': 'Organization',
-    name: 'MásodikVélemény',
-    url: 'https://masodikvelemeny.hu',
+    name: 'Diagnózisom',
+    url: 'https://diagnozisom.hu',
   },
   areaServed: {
     '@type': 'Country',
@@ -59,7 +59,7 @@ export default function PartnerekPage() {
             Legyen partnerünk
           </h1>
           <p className="text-lg text-slate-600 leading-relaxed">
-            A MásodikVélemény platformon keresztül azokat a pácienseket érjük el,
+            A Diagnózisom.hu platformon keresztül azokat a pácienseket érjük el,
             akik aktívan keresnek megbízható orvosi segítséget és tájékozottan akarnak
             dönteni az egészségükről. Csatlakozzon hálózatunkhoz és növelje praxisát.
           </p>
@@ -106,7 +106,7 @@ export default function PartnerekPage() {
               {
                 icon: TrendingUp,
                 title: 'Online Jelenlét Erősítése',
-                desc: 'Partnerlistán való megjelenés a MásodikVélemény platformon, amely folyamatosan növekvő organikus forgalommal rendelkezik.',
+                desc: 'Partnerlistán való megjelenés a Diagnózisom.hu platformon, amely folyamatosan növekvő organikus forgalommal rendelkezik.',
               },
               {
                 icon: Stethoscope,
@@ -164,7 +164,7 @@ export default function PartnerekPage() {
             partnerségi lehetőségekről. Nincs elköteleződés.
           </p>
           <a
-            href="mailto:partner@masodikvelemeny.hu"
+            href="mailto:partner@diagnozisom.hu"
             className="inline-flex items-center gap-2 py-3.5 px-8 health-button btn-primary text-sm font-semibold"
           >
             <Mail className="w-4 h-4" />
@@ -172,7 +172,7 @@ export default function PartnerekPage() {
             <ArrowRight className="w-4 h-4" />
           </a>
           <p className="text-xs text-slate-400 mt-4">
-            partner@masodikvelemeny.hu · Válasz 48 órán belül
+            partner@diagnozisom.hu · Válasz 48 órán belül
           </p>
         </div>
 

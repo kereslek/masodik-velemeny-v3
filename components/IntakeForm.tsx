@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import { cn, formatFileSize } from '@/lib/utils'
 import { useSpeech } from '@/hooks/useSpeech'
+import { RateLimitExceeded } from '@/components/RateLimitExceeded'
 
 const GENDER_OPTIONS = ['Férfi', 'Nő', 'Egyéb / Nem kívánom megadni']
 
@@ -24,6 +25,7 @@ export function IntakeForm() {
   const [files, setFiles] = useState<File[]>([])
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [rateLimitData, setRateLimitData] = useState<{used:number;limit:number;resetAt:string}|null>(null)
 
   // Voice
   const { isListening, transcript, interimTranscript, isSupported, startListening, stopListening, clearTranscript } = useSpeech()
@@ -96,6 +98,11 @@ export function IntakeForm() {
       const res = await fetch('/api/analyze', { method: 'POST', body: formData })
       const data = await res.json()
 
+      if (res.status === 429 && data.error === 'RATE_LIMIT_EXCEEDED') {
+        setRateLimitData({ used: data.queries_used, limit: data.queries_limit, resetAt: data.reset_at })
+        setLoading(false)
+        return
+      }
       if (!res.ok) {
         setError(data.error || 'Hiba történt. Kérlek próbáld újra.')
         setLoading(false)
@@ -108,6 +115,11 @@ export function IntakeForm() {
       setError('Hálózati hiba. Kérlek ellenőrizd az internetkapcsolatod.')
       setLoading(false)
     }
+  }
+
+  // Rate limit exceeded screen
+  if (rateLimitData) {
+    return <RateLimitExceeded used={rateLimitData.used} limit={rateLimitData.limit} resetAt={rateLimitData.resetAt} />
   }
 
   // Loading screen
@@ -381,7 +393,7 @@ export function IntakeForm() {
         whileTap={{ scale: 0.98 }}
         className="w-full py-4 px-8 health-button btn-primary text-lg flex items-center justify-center gap-3"
       >
-        Második vélemény kérése
+        Diagnózis elemzése — második vélemény kérése
         <ChevronRight className="w-5 h-5" />
       </motion.button>
 

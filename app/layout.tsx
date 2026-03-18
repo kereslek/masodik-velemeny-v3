@@ -4,58 +4,61 @@ import { Disclaimer } from '@/components/Disclaimer'
 import { NavBar } from '@/components/NavBar'
 import { Footer } from '@/components/Footer'
 
-const SITE_URL = 'https://masodikvelemeny.hu'
-const SITE_NAME = 'MásodikVélemény'
+const SITE_URL = 'https://diagnozisom.hu'
+const SITE_NAME = 'Diagnózisom'
+const TAGLINE = 'Második vélemény, azonnal, ingyen, anonim'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'MásodikVélemény – Értsd meg a diagnózisodat. AI orvosi segítség azonnal.',
-    template: '%s | MásodikVélemény',
+    default: `Diagnózisom.hu – ${TAGLINE}`,
+    template: `%s | Diagnózisom.hu`,
   },
   description:
-    'Nem érted a diagnózisodat vagy a leleted? Kétséged van az orvosi véleménnyel kapcsolatban? Töltsd fel a dokumentumaidat és írd le a tüneteidet — AI segít megérteni és második véleményt ad. Ingyenes, anonim, GDPR-megfelelő.',
+    'Nem érted a diagnózisodat vagy a leleted? Kétséged van az orvosi véleménnyel? Töltsd fel a dokumentumaidat és írd le a tüneteidet — AI orvosi második véleményt adsz azonnal, ingyen és teljesen anonim módon. GDPR-megfelelő.',
   keywords: [
-    // Understanding / clarity — biggest underserved need
+    // Brand + tagline
+    'Diagnózisom',
+    'diagnozisom.hu',
+    'második vélemény azonnal',
+    'második vélemény ingyen',
+    'második vélemény anonim',
+    // Core use cases — what people actually type
+    'orvosi második vélemény',
+    'második orvosi vélemény online',
     'nem értem a diagnózisomat',
-    'orvosi szakszavak magyarázata',
+    'diagnózis megértése',
     'lelet értelmezése magyarul',
     'zárójelentés megértése',
     'laboreredmény magyarázat',
-    'orvosi terminológia értelmezés',
+    'orvosi szakszavak értelmezése',
+    'orvosi dokumentum értelmezés AI',
     'mit jelent a diagnózis',
-    'orvosi dokumentum értelmezése',
     'lelet mit jelent',
-    'orvosi szöveg magyarázat AI',
     // Doubt / second opinion
-    'orvosi második vélemény',
     'kételyem van a diagnózisommal',
-    'nem biztos diagnózis',
-    'második orvosi vélemény online',
-    'AI orvosi tanács',
+    'második vélemény kérése',
+    'orvosi vélemény online',
+    'ingyenes orvosi tanácsadás',
+    'anonim orvosi kérdés',
+    // AI / tech
+    'AI orvosi elemzés',
+    'mesterséges intelligencia egészség',
+    'Claude AI orvos',
+    'AI diagnózis segítség',
+    'egészségügyi AI Magyar',
     // Symptoms
     'tünetek elemzése online',
     'tüneteim leírása AI',
-    'tünetek értékelése mesterséges intelligencia',
-    // AI / tech
-    'mesterséges intelligencia egészség',
-    'AI orvosi elemzés',
-    'Claude AI orvos',
-    'AI diagnózis segítség',
-    // Platform descriptors
-    'ingyenes orvosi konzultáció online',
-    'anonim orvosi tanácsadás',
-    'orvosi AI elemzés GDPR',
-    'egészségügyi kérdések AI',
-    'lelet feltöltés elemzés',
+    'orvosi AI Magyarország',
   ],
-  authors: [{ name: 'MásodikVélemény', url: SITE_URL }],
-  creator: 'MásodikVélemény',
-  publisher: 'MásodikVélemény',
+  authors: [{ name: 'Diagnózisom', url: SITE_URL }],
+  creator: 'Diagnózisom',
+  publisher: 'Diagnózisom',
   category: 'health',
   applicationName: SITE_NAME,
-  referrer: 'origin-when-cross-origin',
   manifest: '/manifest.json',
+  referrer: 'origin-when-cross-origin',
   robots: {
     index: true,
     follow: true,
@@ -72,23 +75,23 @@ export const metadata: Metadata = {
     locale: 'hu_HU',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: 'MásodikVélemény – Értsd meg a diagnózisodat. AI orvosi segítség azonnal.',
+    title: `Diagnózisom.hu – ${TAGLINE}`,
     description:
-      'Nem érted a leleted? Kétséged van a diagnózisoddal? Töltsd fel a dokumentumaidat — AI másodpercek alatt megmagyarázza és második véleményt ad. Anonim, ingyenes.',
+      'Nem érted a leleted? Kétséged van a diagnózisoddal? Töltsd fel a dokumentumaidat — AI másodpercek alatt megmagyarázza és orvosi második véleményt ad. Teljesen anonim, ingyenes.',
     images: [
       {
         url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'MásodikVélemény – Értsd meg a diagnózisodat. AI orvosi segítség.',
+        alt: `Diagnózisom.hu – ${TAGLINE}`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MásodikVélemény – Értsd meg a diagnózisodat. AI orvosi segítség.',
+    title: `Diagnózisom.hu – ${TAGLINE}`,
     description:
-      'Nem érted a leleteidet? Töltsd fel PDF-ben vagy képként — az AI elmagyarázza és második véleményt ad. Ingyenes, anonim.',
+      'Értsd meg a diagnózisodat. Töltsd fel leleteidet PDF-ben vagy képként — az AI elmagyarázza és orvosi második véleményt ad. Ingyen, anonim.',
     images: ['/opengraph-image'],
   },
   alternates: {
@@ -96,24 +99,26 @@ export const metadata: Metadata = {
     languages: { 'hu-HU': SITE_URL },
   },
   icons: {
-    icon: '/favicon.png',
-    apple: '/apple-touch-icon.png',
+    icon: [{ url: '/favicon.ico', sizes: 'any' }, { url: '/favicon.ico', type: 'image/x-icon' }],
+    apple: '/favicon.ico',
   },
   verification: {
     // google: 'your-google-verification-code',
   },
 }
 
-// ── Structured Data ───────────────────────────────────────────────────────────
+// ── JSON-LD Structured Data ───────────────────────────────────────────────────
 
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'MásodikVélemény',
+  name: 'Diagnózisom',
+  alternateName: 'Diagnózisom.hu',
   url: SITE_URL,
-  logo: `${SITE_URL}/favicon.png`,
+  logo: `${SITE_URL}/favicon.ico`,
   description:
-    'Magyarország vezető AI-alapú orvosi platform, amely segít megérteni a diagnózisokat, értelmezni a leleteket és orvosi második véleményt adni. Azonnali, anonim, ingyenes.',
+    'Magyarország vezető AI-alapú orvosi platform, amely segít megérteni a diagnózisokat, értelmezni a leleteket és orvosi második véleményt adni. Második vélemény, azonnal, ingyen, anonim.',
+  slogan: TAGLINE,
   foundingLocation: { '@type': 'Place', addressCountry: 'HU' },
   areaServed: { '@type': 'Country', name: 'Hungary' },
   serviceType: [
@@ -122,16 +127,19 @@ const organizationSchema = {
     'Diagnosis Clarification',
     'Medical Terminology Explanation',
   ],
-  sameAs: [],
+  contactPoint: [
+    { '@type': 'ContactPoint', email: 'info@diagnozisom.hu', contactType: 'customer support', availableLanguage: 'Hungarian' },
+    { '@type': 'ContactPoint', email: 'partner@diagnozisom.hu', contactType: 'sales', availableLanguage: 'Hungarian' },
+  ],
 }
 
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'MásodikVélemény',
+  name: 'Diagnózisom.hu',
+  alternateName: ['Diagnózisom', 'Diagnozisom'],
   url: SITE_URL,
-  description:
-    'AI-alapú platform diagnózisok megértéséhez, leletek értelmezéséhez és orvosi második vélemény kéréséhez',
+  description: `AI-alapú orvosi második vélemény platform magyar pácienseknek. ${TAGLINE}.`,
   inLanguage: 'hu-HU',
   potentialAction: {
     '@type': 'SearchAction',
@@ -143,22 +151,23 @@ const websiteSchema = {
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'MásodikVélemény AI Orvosi Asszisztens',
+  name: 'Diagnózisom – AI Orvosi Asszisztens',
+  alternateName: 'Diagnózisom.hu',
   url: SITE_URL,
   applicationCategory: 'HealthApplication',
   operatingSystem: 'All',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'HUF' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'HUF', availability: 'https://schema.org/InStock' },
   description:
-    'Segít megérteni a diagnózist, értelmezi az orvosi leleteket és zárójelentéseket, magyarázza a szakmai terminológiát, és AI alapon második véleményt ad. Ingyenes, anonim, GDPR-megfelelő.',
+    'Orvosi második vélemény, diagnózis megértés és lelet értelmezés AI segítségével. Második vélemény, azonnal, ingyen, anonim. GDPR-megfelelő, 0 adattárolás.',
   featureList: [
-    'Diagnózis magyarázata közérthetően',
+    'Diagnózis közérthető magyarázata',
     'Orvosi szakszavak értelmezése',
     'Zárójelentés és laborlelet elemzése',
     'PDF leletek feldolgozása',
     'Orvosi képek elemzése (röntgen, MRI, ultrahang)',
     'Hang alapú tünetleírás magyarul',
     'Azonnali AI orvosi második vélemény',
-    'GDPR-megfelelő, 0 adattárolás',
+    'Teljes anonimitás, GDPR-megfelelő',
     'Ingyenes, regisztráció nélkül',
   ],
   screenshot: `${SITE_URL}/opengraph-image`,

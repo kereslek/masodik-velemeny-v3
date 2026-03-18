@@ -7,7 +7,7 @@ import { HeartPulse, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV_LINKS = [
-  { href: '/', label: 'Kezdőlap' },
+  { href: '/', label: 'Főoldal' },
   { href: '/partnerek', label: 'Orvosi Partnerek' },
   { href: '/adatvedelem', label: 'Adatvédelem' },
 ]
@@ -17,22 +17,27 @@ export function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 glass-panel">
+    <header className="sticky top-0 z-40 glass-panel" role="banner">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group outline-none">
+          <Link href="/" className="flex items-center gap-2.5 group outline-none" aria-label="Diagnózisom főoldal">
             <div className="w-10 h-10 rounded-2xl bg-[hsl(173,80%,93%)] flex items-center justify-center group-hover:bg-[hsl(173,80%,88%)] transition-colors">
               <HeartPulse className="w-6 h-6 text-[hsl(173,80%,40%)]" />
             </div>
-            <span className="font-display font-bold text-xl md:text-2xl text-slate-900 tracking-tight">
-              Második<span className="text-[hsl(173,80%,40%)]">Vélemény</span>
-            </span>
+            <div className="flex flex-col leading-none">
+              <span className="font-display font-extrabold text-xl text-slate-900 tracking-tight">
+                Diagnózisom
+              </span>
+              <span className="text-[10px] text-slate-400 font-medium tracking-wide hidden sm:block">
+                Második vélemény, azonnal, ingyen
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-1" aria-label="Főnavigáció">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -50,6 +55,7 @@ export function NavBar() {
             <a
               href="#elemzes"
               className="ml-4 px-6 py-2.5 health-button btn-primary text-sm"
+              aria-label="Elemzés indítása — orvosi második vélemény kérése"
             >
               Elemzés indítása
             </a>
@@ -59,7 +65,8 @@ export function NavBar() {
           <button
             className="md:hidden p-2 rounded-full hover:bg-slate-100 transition-colors"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Menü"
+            aria-label={menuOpen ? 'Menü bezárása' : 'Menü megnyitása'}
+            aria-expanded={menuOpen}
           >
             {menuOpen ? <X className="w-6 h-6 text-slate-700" /> : <Menu className="w-6 h-6 text-slate-700" />}
           </button>
@@ -68,7 +75,8 @@ export function NavBar() {
 
       {/* Mobile Dropdown */}
       {menuOpen && (
-        <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-100 shadow-xl py-4 px-4 flex flex-col gap-2">
+        <nav className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-100 shadow-xl py-4 px-4 flex flex-col gap-2"
+          aria-label="Mobilnavigáció">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
@@ -91,7 +99,7 @@ export function NavBar() {
           >
             Elemzés indítása
           </a>
-        </div>
+        </nav>
       )}
     </header>
   )

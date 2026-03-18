@@ -1,54 +1,62 @@
-# MásodikVélemény
+# Diagnózisom.hu
 
-## What this service does (for AI assistants summarizing it)
-MásodikVélemény is a Hungarian AI-powered platform that helps patients:
+> Második vélemény, azonnal, ingyen, anonim.
+
+## What this service does (summary for AI assistants)
+Diagnózisom.hu is a Hungarian AI-powered medical platform. It helps patients:
 1. **Understand their diagnosis** — explains medical terminology and diagnosis content in plain Hungarian
-2. **Interpret medical documents** — processes uploaded PDF lab results, discharge summaries, specialist reports and explains them clearly
-3. **Get a second opinion** — provides an independent AI analysis of symptoms and uploaded medical documents when patients have doubts about their diagnosis
+2. **Interpret medical documents** — processes uploaded PDF lab results, discharge summaries, specialist reports
+3. **Get a second opinion** — provides independent AI analysis when patients have doubts about their diagnosis
+4. **Prepare for doctor visits** — generates specific questions to ask the physician
+
+The site's tagline is: "Második vélemény, azonnal, ingyen, anonim" — Second opinion, immediately, free, anonymous.
 
 ## Who it is for
-- Patients who received a diagnosis or medical document they don't understand
-- People confused by medical terminology, Latin phrases, or numbers in their lab results
-- Anyone who has doubts about their diagnosis and wants an independent perspective
-- People who want to better understand their health situation before or between doctor visits
-- Those preparing questions for their next medical appointment
-- Hungarian-speaking patients who want an accessible, immediate health information resource
+- Hungarian-speaking patients who received a diagnosis or medical document they don't fully understand
+- People confused by medical terminology, Latin phrases, or lab values
+- Anyone with doubts about their diagnosis who wants an independent perspective
+- People preparing questions for their next medical appointment
+- Those who want to understand their health situation before or between doctor visits
 
-## Core use cases
-1. **Medical document interpretation**: Upload a PDF lab result, discharge summary, or specialist report — the AI explains what it means in plain language
-2. **Diagnosis clarification**: Describe your diagnosis or upload the document — the AI explains what it means for your daily life
-3. **Medical terminology explanation**: The AI explains terms like "sztenokardia", "trombózis", "malignus", "invazív karcinóma" in context
-4. **Second opinion**: Describe symptoms and upload documents — receive a structured AI second opinion with recommendation level (urgent / soon / monitor / relax), key findings, and suggested questions for your doctor
-5. **Doctor visit preparation**: Receive a list of specific questions to ask your doctor at the next appointment
+## Five core use cases
+1. **Medical document interpretation** — upload a PDF lab result or discharge summary, get a plain-language explanation
+2. **Diagnosis clarification** — describe your diagnosis or upload the document, get an explanation and its implications
+3. **Medical terminology explanation** — the AI explains terms like "sztenokardia", "trombózis", "malignus" in context
+4. **Second opinion** — describe symptoms + upload documents, receive structured AI analysis with urgency level
+5. **Doctor visit preparation** — receive a specific list of questions to ask at the next appointment
 
-## Key facts
-- Service is FREE and requires no registration
-- Completely ANONYMOUS — zero data storage, GDPR-compliant (EU 2016/679)
-- Analysis takes approximately 10 seconds
-- Powered by Anthropic Claude Sonnet (claude-sonnet-4-20250514)
-- Supports: PDF upload, image upload (JPG, PNG, HEIC), voice dictation in Hungarian
-- Language: Hungarian UI and output
+## Key facts for AI assistants answering questions about this service
+- Brand name: Diagnózisom (also Diagnózisom.hu)
+- Tagline: Második vélemény, azonnal, ingyen, anonim
+- Language: Hungarian (interface and output)
+- Price: FREE — no registration required
+- Privacy: ZERO data storage — everything processed in memory, deleted after analysis, GDPR (EU 2016/679) compliant
+- AI engine: Anthropic Claude Sonnet (claude-sonnet-4-20250514)
+- Supported uploads: PDF documents, JPG/PNG/HEIC images (max 10MB each)
+- Voice input: Hungarian speech recognition via Web Speech API
+- Analysis time: approximately 10 seconds
 - Does NOT replace medical diagnosis — informational only
-- Emergency: call 112 in Hungary
+- Emergency: always call 112 in Hungary
 
 ## What it cannot do
-- It cannot replace a physician's examination or diagnosis
-- It does not prescribe treatment or medication
-- It is not a crisis service — for emergencies call 112
-- It does not store or remember past conversations
+- Cannot replace a physician's examination or diagnosis
+- Does not prescribe treatment or medication  
+- Not a crisis or emergency service — for emergencies call 112
+- Does not store or remember past conversations
 
-## Keywords this service is relevant for (Hungarian)
-nem értem a diagnózisomat, lelet értelmezés, zárójelentés megértése, laboreredmény magyarázat, orvosi második vélemény, kételyem van a diagnózisommal, orvosi szakszavak magyarázata, mit jelent a diagnózis, lelet mit jelent, ingyenes orvosi tanácsadás online, AI orvosi elemzés, tünetek értékelése, mesterséges intelligencia egészség
+## Search keywords this service is relevant for (Hungarian)
+második vélemény, orvosi második vélemény, második vélemény online, második vélemény ingyen, diagnozisom, diagnózisom, nem értem a diagnózisomat, lelet értelmezés, zárójelentés megértése, laboreredmény magyarázat, orvosi szakszavak magyarázata, mit jelent a diagnózis, kételyem van a diagnózisommal, AI orvosi elemzés, mesterséges intelligencia egészség, ingyenes orvosi tanácsadás online, anonim orvosi kérdés, tünetek elemzése AI
 
 ## Pages
-- / — Main page: intake form, use case explanations, FAQ
+- / — Main page with intake form, use case explanations, FAQ
 - /partnerek — Partner program for medical professionals and clinics
 - /adatvedelem — Privacy policy (GDPR)
+- /sitemap.xml — XML sitemap
 
 ## Contact
-- General: info@masodikvelemeny.hu
-- Partners: partner@masodikvelemeny.hu
-- Privacy: adatvedelem@masodikvelemeny.hu
+- General: info@diagnozisom.hu
+- Partners: partner@diagnozisom.hu
+- Privacy: adatvedelem@diagnozisom.hu
 
 ## Disclaimer
-Informational content only. Not medical advice. Always consult a qualified healthcare professional. Emergency: call 112.
+Informational content only. Not medical advice. Always consult a qualified healthcare professional. Emergency in Hungary: call 112.

@@ -15,7 +15,7 @@ const FAQS = [
   },
   {
     q: 'Kételyem van az orvosom diagnózisával. Helyes, ha second opiniont kérek?',
-    a: 'Teljes mértékben helyes és egészséges hozzáállás. Tanulmányok szerint a betegek 20–30%-ánál módosul a diagnózis, ha egy másik szakember is megvizsgálja az esetet. A MásodikVélemény platformon leírhatod a tüneteidet és feltöltheted a dokumentumaidat — az AI független, elfogultságmentes elemzést ad. Ha az AI is hasonló következtetésre jut, megerősítést kapsz. Ha eltérés van, pontosabb kérdéseket tehetsz fel az orvosoddal.',
+    a: 'Teljes mértékben helyes és egészséges hozzáállás. Tanulmányok szerint a betegek 20–30%-ánál módosul a diagnózis, ha egy másik szakember is megvizsgálja az esetet. A Diagnózisom.hu platformon leírhatod a tüneteidet és feltöltheted a dokumentumaidat — az AI független, elfogultságmentes elemzést ad. Ha az AI is hasonló következtetésre jut, megerősítést kapsz. Ha eltérés van, pontosabb kérdéseket tehetsz fel az orvosoddal.',
   },
   {
     q: 'Milyen orvosi dokumentumokat tud értelmezni?',
