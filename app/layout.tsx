@@ -184,12 +184,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <div className="min-h-screen flex flex-col relative overflow-x-hidden">
-          <Disclaimer />
           <NavBar />
           <main className="flex-1 flex flex-col" id="main-content" role="main">
             {children}
           </main>
           <Footer />
+          <Disclaimer />
         </div>
       </body>
     </html>

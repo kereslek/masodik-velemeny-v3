@@ -76,8 +76,8 @@ async function sendConfirmationEmail(email: string, name: string, followup: bool
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'Diagnózisom <info@diagnozisom.hu>',
-      to: [email],
+      from: process.env.EMAIL_FROM || 'Diagnózisom <onboarding@resend.dev>',
+      to: [process.env.EMAIL_TO_OVERRIDE || email],
       subject: followup
         ? 'Adatait rögzítettük – orvosi visszajelzés folyamatban'
         : 'Köszönjük – adatait rögzítettük',
