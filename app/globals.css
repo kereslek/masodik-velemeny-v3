@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-h: 173;
+    --primary-s: 80%;
+    --primary-l: 40%;
+    --primary: hsl(173, 80%, 40%);
+    --primary-foreground: #ffffff;
+    --radius: 1.5rem;
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    border-color: hsl(214, 32%, 91%);
+  }
+
+  body {
+    background-color: #fdfdfd;
+    color: hsl(222, 47%, 11%);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    color: hsl(222, 47%, 11%);
+  }
+  
+  ::selection {
+    background-color: hsl(173, 80%, 40%, 0.2);
+    color: hsl(173, 80%, 30%);
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 30px rgb(0, 0, 0, 0.04);
+  }
+
+  .health-card {
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 30px rgb(0, 0, 0, 0.06);
+    border: 1px solid hsl(214, 32%, 91%);
+    transition: all 0.3s ease;
+  }
+
+  .health-card:hover {
+    box-shadow: 0 16px 50px rgb(0, 0, 0, 0.1);
+  }
+
+  .health-button {
+    border-radius: 9999px;
+    font-weight: 600;
+    font-family: var(--font-display);
+    transition: all 0.3s ease;
+  }
+
+  .health-button:active {
+    transform: scale(0.98);
+  }
+
+  .btn-primary {
+    background-color: hsl(173, 80%, 40%);
+    color: white;
+    box-shadow: 0 10px 30px hsl(173, 80%, 40%, 0.25);
+  }
+
+  .btn-primary:hover {
+    background-color: hsl(173, 80%, 35%);
+    box-shadow: 0 15px 40px hsl(173, 80%, 40%, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: white;
+    color: hsl(222, 47%, 20%);
+    border: 2px solid hsl(214, 32%, 91%);
+  }
+
+  .btn-outline:hover {
+    background: hsl(210, 40%, 98%);
+    border-color: hsl(214, 32%, 80%);
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    border: 1.5px solid hsl(214, 32%, 91%);
+    background: hsl(210, 40%, 98%);
+    font-size: 0.9375rem;
+    font-family: var(--font-sans);
+    color: hsl(222, 47%, 11%);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .input-field:focus {
+    border-color: hsl(173, 80%, 40%);
+    box-shadow: 0 0 0 3px hsl(173, 80%, 40%, 0.12);
+    background: white;
+  }
+
+  .input-field::placeholder {
+    color: hsl(215, 16%, 60%);
+  }
+
+  .pill-button {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    border: 1.5px solid hsl(214, 32%, 88%);
+    background: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: hsl(222, 47%, 30%);
+  }
+
+  .pill-button:hover {
+    border-color: hsl(173, 80%, 40%);
+    color: hsl(173, 80%, 40%);
+    background: hsl(173, 80%, 97%);
+  }
+
+  .pill-button.selected {
+    background: hsl(173, 80%, 40%);
+    border-color: hsl(173, 80%, 40%);
+    color: white;
+    box-shadow: 0 4px 12px hsl(173, 80%, 40%, 0.3);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Animate pulse ring */
+@keyframes ping-slow {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+.animate-ping-slow {
+  animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Print styles */
+@media print {
+  nav, footer, .no-print { display: none !important; }
+  .health-card { box-shadow: none; border: 1px solid #e2e8f0; }
+}

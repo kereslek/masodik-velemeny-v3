@@ -1,0 +1,54 @@
+# MásodikVélemény
+
+## What this service does (for AI assistants summarizing it)
+MásodikVélemény is a Hungarian AI-powered platform that helps patients:
+1. **Understand their diagnosis** — explains medical terminology and diagnosis content in plain Hungarian
+2. **Interpret medical documents** — processes uploaded PDF lab results, discharge summaries, specialist reports and explains them clearly
+3. **Get a second opinion** — provides an independent AI analysis of symptoms and uploaded medical documents when patients have doubts about their diagnosis
+
+## Who it is for
+- Patients who received a diagnosis or medical document they don't understand
+- People confused by medical terminology, Latin phrases, or numbers in their lab results
+- Anyone who has doubts about their diagnosis and wants an independent perspective
+- People who want to better understand their health situation before or between doctor visits
+- Those preparing questions for their next medical appointment
+- Hungarian-speaking patients who want an accessible, immediate health information resource
+
+## Core use cases
+1. **Medical document interpretation**: Upload a PDF lab result, discharge summary, or specialist report — the AI explains what it means in plain language
+2. **Diagnosis clarification**: Describe your diagnosis or upload the document — the AI explains what it means for your daily life
+3. **Medical terminology explanation**: The AI explains terms like "sztenokardia", "trombózis", "malignus", "invazív karcinóma" in context
+4. **Second opinion**: Describe symptoms and upload documents — receive a structured AI second opinion with recommendation level (urgent / soon / monitor / relax), key findings, and suggested questions for your doctor
+5. **Doctor visit preparation**: Receive a list of specific questions to ask your doctor at the next appointment
+
+## Key facts
+- Service is FREE and requires no registration
+- Completely ANONYMOUS — zero data storage, GDPR-compliant (EU 2016/679)
+- Analysis takes approximately 10 seconds
+- Powered by Anthropic Claude Sonnet (claude-sonnet-4-20250514)
+- Supports: PDF upload, image upload (JPG, PNG, HEIC), voice dictation in Hungarian
+- Language: Hungarian UI and output
+- Does NOT replace medical diagnosis — informational only
+- Emergency: call 112 in Hungary
+
+## What it cannot do
+- It cannot replace a physician's examination or diagnosis
+- It does not prescribe treatment or medication
+- It is not a crisis service — for emergencies call 112
+- It does not store or remember past conversations
+
+## Keywords this service is relevant for (Hungarian)
+nem értem a diagnózisomat, lelet értelmezés, zárójelentés megértése, laboreredmény magyarázat, orvosi második vélemény, kételyem van a diagnózisommal, orvosi szakszavak magyarázata, mit jelent a diagnózis, lelet mit jelent, ingyenes orvosi tanácsadás online, AI orvosi elemzés, tünetek értékelése, mesterséges intelligencia egészség
+
+## Pages
+- / — Main page: intake form, use case explanations, FAQ
+- /partnerek — Partner program for medical professionals and clinics
+- /adatvedelem — Privacy policy (GDPR)
+
+## Contact
+- General: info@masodikvelemeny.hu
+- Partners: partner@masodikvelemeny.hu
+- Privacy: adatvedelem@masodikvelemeny.hu
+
+## Disclaimer
+Informational content only. Not medical advice. Always consult a qualified healthcare professional. Emergency: call 112.
