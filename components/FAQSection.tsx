@@ -55,29 +55,54 @@ export function FAQSection() {
         Minden, amit tudni érdemes — a lelet értelmezéstől a diagnózis megértéséig.
       </p>
 
-      <div className="space-y-3" itemScope itemType="https://schema.org/FAQPage">
+      {/* 
+        NO microdata here — FAQPage JSON-LD is already in page.tsx as a script tag.
+        Having both causes "Duplicate field: FAQPage" error in Google Search Console.
+        The answers are always in the DOM (just visually hidden) so Google can read them.
+      */}
+      <div className="space-y-3">
         {FAQS.map((faq, i) => (
           <div
             key={i}
-            className={cn('health-card overflow-hidden transition-all duration-200', open === i ? 'shadow-health-lg' : '')}
-            itemScope itemProp="mainEntity" itemType="https://schema.org/Question"
+            className={cn(
+              'health-card overflow-hidden transition-all duration-200',
+              open === i ? 'shadow-health-lg' : ''
+            )}
           >
             <button
               className="w-full flex items-center justify-between gap-4 p-6 text-left"
               onClick={() => setOpen(open === i ? null : i)}
               aria-expanded={open === i}
+              aria-controls={`faq-answer-${i}`}
             >
-              <span className="font-semibold text-slate-900 text-base" itemProp="name">{faq.q}</span>
+              <span className="font-semibold text-slate-900 text-base">{faq.q}</span>
               <ChevronDown
-                className={cn('w-5 h-5 flex-shrink-0 transition-transform duration-200', open === i ? 'rotate-180' : '')}
+                className={cn(
+                  'w-5 h-5 flex-shrink-0 transition-transform duration-200',
+                  open === i ? 'rotate-180' : ''
+                )}
                 style={{ color: 'hsl(173,80%,40%)' }}
               />
             </button>
-            {open === i && (
-              <div className="px-6 pb-6 text-slate-600 leading-relaxed text-sm" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                <div itemProp="text">{faq.a}</div>
+
+            {/* 
+              Always render answer in DOM so Google can index it.
+              Use CSS visibility instead of conditional rendering.
+              When closed: height 0, overflow hidden, opacity 0 — invisible but present in DOM.
+            */}
+            <div
+              id={`faq-answer-${i}`}
+              style={{
+                maxHeight: open === i ? '500px' : '0',
+                overflow: 'hidden',
+                opacity: open === i ? 1 : 0,
+                transition: 'max-height 0.25s ease, opacity 0.2s ease',
+              }}
+            >
+              <div className="px-6 pb-6 text-slate-600 leading-relaxed text-sm border-t border-slate-100 pt-4">
+                {faq.a}
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
