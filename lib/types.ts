@@ -1,18 +1,24 @@
 export type Recommendation = 'urgent' | 'soon' | 'monitor' | 'relax'
 
+export interface DifferentialItem {
+  condition: string       // Name of the condition in Hungarian
+  reason: string          // Why it's relevant based on the symptoms/findings
+  how_to_exclude: string  // What test/exam would rule it out
+}
+
 export interface AnalysisResult {
   summary: string
   findings: string[]
   recommendation: Recommendation
   recommendation_text: string
+  // NEW: differential considerations — shown BEFORE questions_to_ask
+  differential_considerations: DifferentialItem[]
   questions_to_ask: string[]
   red_flags: string[]
-  // Coherence between text description and uploaded documents (only present if files were uploaded)
-  coherence_score: number | null        // 0–100, null if no files uploaded
-  coherence_summary: string | null      // 1 sentence explaining alignment
-  // Search queries
-  clinic_search_query: string           // Hungarian Google query for finding a doctor/clinic
-  google_search_query: string           // General info search query (English)
+  coherence_score: number | null
+  coherence_summary: string | null
+  clinic_search_query: string
+  google_search_query: string
   disclaimer: string
 }
 

@@ -9,7 +9,7 @@ import {
   RotateCcw, ArrowRight, ShieldAlert, BookOpen,
   FileCheck, FileX, Minus, Hospital, Search,
   Mail, Download, Phone, User, Bell, CheckCircle,
-  Loader2, X,
+  Loader2, X, FlaskConical,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { AnalysisResult } from '@/lib/types'
@@ -17,41 +17,23 @@ import type { AnalysisResult } from '@/lib/types'
 interface Props { result: AnalysisResult }
 
 const RECOMMENDATION_CONFIG = {
-  urgent: {
-    label: 'Sürgős orvosi vizsgálat',
-    sublabel: 'Kérjük, 24 órán belül keress fel orvost vagy menj sürgősségire.',
-    icon: AlertTriangle, bg: 'bg-red-50', border: 'border-red-200', badge: 'bg-red-100 text-red-700',
-  },
-  soon: {
-    label: 'Mielőbbi orvosi konzultáció',
-    sublabel: 'A tünetek alapján 1–2 héten belül javasolt orvoshoz fordulni.',
-    icon: Clock, bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700',
-  },
-  monitor: {
-    label: 'Figyelj és tájékozódj',
-    sublabel: 'Nem sürgős, de érdemes nyomon követni a tüneteket.',
-    icon: Activity, bg: 'bg-blue-50', border: 'border-blue-200', badge: 'bg-blue-100 text-blue-700',
-  },
-  relax: {
-    label: 'Valószínűleg nem komoly',
-    sublabel: 'A leírtak alapján nem kell azonnal aggódni, de figyelj magadra.',
-    icon: CheckCircle2, bg: 'bg-teal-50', border: 'border-teal-200', badge: 'bg-teal-100 text-teal-700',
-  },
+  urgent: { label: 'Sürgős orvosi vizsgálat', sublabel: 'Kérjük, 24 órán belül keress fel orvost vagy menj sürgősségire.', icon: AlertTriangle, bg: 'bg-red-50', border: 'border-red-200', badge: 'bg-red-100 text-red-700' },
+  soon:   { label: 'Mielőbbi orvosi konzultáció', sublabel: 'A tünetek alapján 1–2 héten belül javasolt orvoshoz fordulni.', icon: Clock, bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700' },
+  monitor:{ label: 'Figyelj és tájékozódj', sublabel: 'Nem sürgős, de érdemes nyomon követni a tüneteket.', icon: Activity, bg: 'bg-blue-50', border: 'border-blue-200', badge: 'bg-blue-100 text-blue-700' },
+  relax:  { label: 'Valószínűleg nem komoly', sublabel: 'A leírtak alapján nem kell azonnal aggódni, de figyelj magadra.', icon: CheckCircle2, bg: 'bg-teal-50', border: 'border-teal-200', badge: 'bg-teal-100 text-teal-700' },
 }
 
-// ── Coherence Bar ──────────────────────────────────────────────────────────────
 function CoherenceIndicator({ score, summary }: { score: number; summary: string | null }) {
   const cfg = score >= 75
     ? { label: 'Összhangban', color: 'hsl(173,80%,40%)', track: 'hsl(173,80%,93%)', icon: FileCheck, iconCls: 'text-teal-600', bg: 'bg-teal-50', border: 'border-teal-200' }
     : score >= 40
     ? { label: 'Részben egyezik', color: 'hsl(38,92%,50%)', track: 'hsl(38,92%,93%)', icon: Minus, iconCls: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200' }
     : { label: 'Eltérés észlelhető', color: 'hsl(0,84%,60%)', track: 'hsl(0,84%,95%)', icon: FileX, iconCls: 'text-red-600', bg: 'bg-red-50', border: 'border-red-100' }
-
   const Icon = cfg.icon
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
       className={cn('health-card p-6 md:p-8 border', cfg.bg, cfg.border)}>
-      <div className="flex items-start gap-4 mb-5">
+      <div className="flex items-start gap-4 mb-4">
         <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 border', cfg.bg, cfg.border)}>
           <Icon className={cn('w-5 h-5', cfg.iconCls)} />
         </div>
@@ -76,175 +58,138 @@ function CoherenceIndicator({ score, summary }: { score: number; summary: string
   )
 }
 
-// ── Email / Lead Panel ─────────────────────────────────────────────────────────
-function EmailLeadPanel() {
+// ── Email results panel (Option A: simple, private) ────────────────────────────
+function EmailResultsPanel({ result }: { result: AnalysisResult }) {
   const [open, setOpen] = useState(false)
-  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [wantsContact, setWantsContact] = useState(false)
+  const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-  const [followup, setFollowup] = useState(false)
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
   const handleSubmit = async () => {
     setErrorMsg('')
-    if (!email || !email.includes('@')) {
-      setErrorMsg('Kérlek adj meg egy érvényes email címet.')
-      return
-    }
+    if (!email || !email.includes('@')) { setErrorMsg('Kérlek adj meg érvényes email címet.'); return }
     setStatus('sending')
+
     try {
-      const res = await fetch('/api/lead', {
+      // Send results email
+      const emailRes = await fetch('/api/send-results', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, professional_followup: followup }),
+        body: JSON.stringify({
+          email,
+          result,
+          wants_contact: wantsContact,
+          name: wantsContact ? name : undefined,
+          phone: wantsContact ? phone : undefined,
+        }),
       })
-      const data = await res.json()
-      if (!res.ok) { setErrorMsg(data.error || 'Hiba történt.'); setStatus('error'); return }
+
+      const data = await emailRes.json()
+      if (!emailRes.ok) { setErrorMsg(data.error || 'Hiba.'); setStatus('error'); return }
       setStatus('done')
     } catch {
-      setErrorMsg('Hálózati hiba. Kérlek próbáld újra.')
+      setErrorMsg('Hálózati hiba.')
       setStatus('error')
     }
   }
 
   return (
     <div className="border border-slate-200 rounded-2xl overflow-hidden">
-      {/* Trigger row */}
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center gap-4 p-4 bg-white hover:bg-slate-50 transition-colors text-left"
-      >
+      <button onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center gap-4 p-4 bg-white hover:bg-slate-50 transition-colors text-left">
         <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
           <Mail className="w-5 h-5 text-slate-500" />
         </div>
         <div className="flex-1">
-          <p className="font-bold text-slate-900 text-sm">Eredmény küldése emailben</p>
-          <p className="text-xs text-slate-500">Kapj értesítést és iratkozz fel orvosi visszajelzésre</p>
+          <p className="font-bold text-slate-900 text-sm mb-0.5">Eredmény küldése emailben</p>
+          <p className="text-xs text-slate-500">Kapd meg az elemzést a postaládádba</p>
         </div>
         <ChevronDown className={cn('w-4 h-4 text-slate-400 transition-transform duration-200 flex-shrink-0', open && 'rotate-180')} />
       </button>
 
-      {/* Expandable form */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="overflow-hidden"
-          >
-            <div className="px-5 pb-5 pt-2 border-t border-slate-100 bg-slate-50 space-y-4">
-
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }} className="overflow-hidden border-t border-slate-100">
+            <div className="px-5 pb-5 pt-4 bg-slate-50 space-y-4">
               {status === 'done' ? (
-                <div className="flex flex-col items-center py-6 gap-3">
-                  <CheckCircle className="w-10 h-10 text-teal-500" />
-                  <p className="font-bold text-slate-900">Köszönjük!</p>
-                  <p className="text-sm text-slate-500 text-center">
-                    Rögzítettük az adataidat.
-                    {followup && ' Orvosi szakember hamarosan felveszi veled a kapcsolatot.'}
+                <div className="flex flex-col items-center py-5 gap-3 text-center">
+                  <CheckCircle className="w-9 h-9 text-teal-500" />
+                  <p className="font-bold text-slate-900">Elküldve!</p>
+                  <p className="text-sm text-slate-500">
+                    Az elemzés megérkezett a postaládádba.
+                    {wantsContact && ' Orvosi partnerünk hamarosan felveszi veled a kapcsolatot.'}
                   </p>
                 </div>
               ) : (
                 <>
-                  {/* Name */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                      <User className="w-3 h-3 inline mr-1" />Teljes név (opcionális)
-                    </label>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={e => setName(e.target.value)}
-                      placeholder="pl. Kovács Anna"
-                      className="input-field text-sm py-2.5"
-                    />
-                  </div>
-
-                  {/* Email */}
                   <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1.5">
                       <Mail className="w-3 h-3 inline mr-1" />Email cím <span className="text-red-500">*</span>
                     </label>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      placeholder="pelda@email.hu"
-                      className="input-field text-sm py-2.5"
-                    />
+                    <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+                      placeholder="pelda@email.hu" className="input-field text-sm py-2.5" />
                   </div>
 
-                  {/* Phone */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                      <Phone className="w-3 h-3 inline mr-1" />Telefonszám (opcionális)
-                    </label>
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={e => setPhone(e.target.value)}
-                      placeholder="+36 30 123 4567"
-                      className="input-field text-sm py-2.5"
-                    />
-                  </div>
-
-                  {/* Followup consent checkbox */}
-                  <label className="flex items-start gap-3 cursor-pointer group">
+                  {/* Optional: opt in for professional contact */}
+                  <label className="flex items-start gap-3 cursor-pointer p-3 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors">
                     <div className="relative flex-shrink-0 mt-0.5">
-                      <input
-                        type="checkbox"
-                        checked={followup}
-                        onChange={e => setFollowup(e.target.checked)}
-                        className="sr-only"
-                      />
-                      <div
-                        className={cn(
-                          'w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200',
-                          followup
-                            ? 'border-[hsl(173,80%,40%)] bg-[hsl(173,80%,40%)]'
-                            : 'border-slate-300 bg-white group-hover:border-slate-400'
-                        )}
-                      >
-                        {followup && <CheckCircle className="w-3 h-3 text-white" />}
+                      <input type="checkbox" checked={wantsContact}
+                        onChange={e => setWantsContact(e.target.checked)} className="sr-only" />
+                      <div className={cn('w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all',
+                        wantsContact ? 'border-[hsl(173,80%,40%)] bg-[hsl(173,80%,40%)]' : 'border-slate-300 bg-white')}>
+                        {wantsContact && <CheckCircle className="w-3 h-3 text-white" />}
                       </div>
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-slate-800 leading-snug">
-                        Szeretném, ha orvosi szakember felvenne velem a kapcsolatot
-                      </p>
+                      <p className="text-sm font-semibold text-slate-800">Orvosi szakember hívjon fel</p>
                       <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                        Beleegyezem, hogy a Diagnózisom.hu platformon regisztrált orvosi partner
-                        emailben vagy telefonon felvegye velem a kapcsolatot. Adataimat harmadik
-                        félnek nem adjuk át, és bármikor leiratkozhatsz.
+                        Egy regisztrált orvosi partnerünk felveszi veled a kapcsolatot. GDPR szerint kezeljük az adataidat.
                       </p>
                     </div>
                   </label>
 
-                  {/* Error */}
-                  {(status === 'error' || errorMsg) && (
+                  {/* Extra fields only shown if contact requested */}
+                  {wantsContact && (
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
+                      className="space-y-3 overflow-hidden">
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                          <User className="w-3 h-3 inline mr-1" />Teljes név (opcionális)
+                        </label>
+                        <input type="text" value={name} onChange={e => setName(e.target.value)}
+                          placeholder="pl. Kovács Anna" className="input-field text-sm py-2.5" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                          <Phone className="w-3 h-3 inline mr-1" />Telefonszám (opcionális)
+                        </label>
+                        <input type="tel" value={phone} onChange={e => setPhone(e.target.value)}
+                          placeholder="+36 30 123 4567" className="input-field text-sm py-2.5" />
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {errorMsg && (
                     <p className="text-xs text-red-600 font-medium flex items-center gap-1.5">
                       <X className="w-3.5 h-3.5" />{errorMsg}
                     </p>
                   )}
 
-                  {/* Submit */}
-                  <button
-                    onClick={handleSubmit}
-                    disabled={status === 'sending'}
-                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-60"
-                    style={{ background: 'hsl(173,80%,40%)' }}
-                  >
+                  <button onClick={handleSubmit} disabled={status === 'sending'}
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm text-white disabled:opacity-60 transition-all"
+                    style={{ background: 'hsl(173,80%,40%)' }}>
                     {status === 'sending'
                       ? <><Loader2 className="w-4 h-4 animate-spin" />Küldés...</>
-                      : <><Bell className="w-4 h-4" />Elküldés és feliratkozás</>
-                    }
+                      : <><Mail className="w-4 h-4" />Elemzés elküldése</>}
                   </button>
 
                   <p className="text-xs text-slate-400 text-center leading-relaxed">
-                    GDPR: az adatokat biztonságosan tároljuk és kizárólag az általad megjelölt célra használjuk.
-                    Az egészségügyi adatokat külön nem tároljuk.
+                    GDPR: az email kizárólag az elemzés kézbesítésére szolgál. Egészségügyi adatot nem tárolunk.
+                    {wantsContact && ' A kapcsolatfelvételi adatokat titkosítva tároljuk.'}
                   </p>
                 </>
               )}
@@ -256,16 +201,11 @@ function EmailLeadPanel() {
   )
 }
 
-// ── Next Steps Panel ───────────────────────────────────────────────────────────
 function NextStepsPanel({ result }: { result: AnalysisResult }) {
   const clinicQuery = result.clinic_search_query || 'szakorvos magánrendelés Magyarország'
-  const clinicUrl   = `https://www.google.hu/search?q=${encodeURIComponent(clinicQuery)}&hl=hu&gl=hu`
-
-  // Info search — now fully Hungarian query + Hungarian Google
+  const clinicUrl = `https://www.google.hu/search?q=${encodeURIComponent(clinicQuery)}&hl=hu&gl=hu`
   const infoQuery = result.google_search_query || ''
-  const infoUrl   = infoQuery
-    ? `https://www.google.hu/search?q=${encodeURIComponent(infoQuery)}&hl=hu&gl=hu`
-    : null
+  const infoUrl = infoQuery ? `https://www.google.hu/search?q=${encodeURIComponent(infoQuery)}&hl=hu&gl=hu` : null
 
   const handleSavePDF = () => {
     const s = document.createElement('style')
@@ -280,74 +220,67 @@ function NextStepsPanel({ result }: { result: AnalysisResult }) {
       className="health-card p-6 md:p-8"
       style={{ background: 'linear-gradient(135deg,hsl(173,80%,98%),hsl(210,60%,98%))' }}>
 
-      <div className="mb-6">
+      <div className="mb-5">
         <h3 className="text-xl font-extrabold text-slate-900 mb-1">Mi legyen a következő lépés?</h3>
         <p className="text-slate-500 text-sm leading-relaxed">
-          Az AI elemzés egy kiindulópont. Találj szakembert, tájékozódj tovább, vagy mentsd el az eredményt.
+          Találj szakembert, tájékozódj tovább, vagy mentsd el az eredményt.
         </p>
       </div>
 
-      {/* 1 — Find a doctor */}
+      {/* Find a doctor */}
       <a href={clinicUrl} target="_blank" rel="noopener noreferrer"
-        className="flex items-center gap-4 p-4 mb-3 rounded-2xl border-2 bg-white transition-all duration-200 group no-underline"
+        className="flex items-center gap-4 p-4 mb-3 rounded-2xl border-2 bg-white transition-all group no-underline"
         style={{ borderColor: 'hsl(173,80%,70%)' }}
         onMouseEnter={e => (e.currentTarget.style.background = 'hsl(173,80%,97%)')}
-        onMouseLeave={e => (e.currentTarget.style.background = 'white')}
-      >
+        onMouseLeave={e => (e.currentTarget.style.background = 'white')}>
         <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
           style={{ background: 'hsl(173,80%,93%)' }}>
           <Hospital className="w-5 h-5" style={{ color: 'hsl(173,80%,40%)' }} />
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-bold text-slate-900 text-sm mb-0.5">Szakorvos vagy klinika keresése</p>
-          <p className="text-xs text-slate-500 truncate">
-            <em className="text-slate-600 not-italic">„{clinicQuery}"</em>
-          </p>
+          <p className="text-xs text-slate-500 truncate"><em className="not-italic text-slate-600">„{clinicQuery}"</em></p>
         </div>
         <ArrowRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform flex-shrink-0" />
       </a>
 
-      {/* 2 — General info (Hungarian) */}
+      {/* Info search */}
       {infoUrl && (
         <a href={infoUrl} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-4 p-4 mb-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all group no-underline"
-        >
+          className="flex items-center gap-4 p-4 mb-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all group no-underline">
           <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 bg-slate-100">
             <Search className="w-5 h-5 text-slate-500" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-bold text-slate-900 text-sm mb-0.5">Tájékozódás a témában</p>
-            <p className="text-xs text-slate-500 truncate">
-              <em className="text-slate-600 not-italic">„{infoQuery}"</em>
-            </p>
+            <p className="text-xs text-slate-500 truncate"><em className="not-italic text-slate-600">„{infoQuery}"</em></p>
           </div>
           <ArrowRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform flex-shrink-0" />
         </a>
       )}
 
-      {/* 3 — Print + Save PDF */}
+      {/* Print + PDF */}
       <div className="grid grid-cols-2 gap-3 mb-3 no-print">
         <button onClick={() => window.print()}
-          className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all">
+          className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
           <Printer className="w-4 h-4 text-slate-500" />Nyomtatás
         </button>
         <button onClick={handleSavePDF}
-          className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all">
+          className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
           <Download className="w-4 h-4 text-slate-500" />Mentés PDF
         </button>
       </div>
 
-      {/* 4 — Email / Lead capture */}
-      <EmailLeadPanel />
-
+      {/* Email results */}
+      <EmailResultsPanel result={result} />
     </motion.div>
   )
 }
 
-// ── Main Export ────────────────────────────────────────────────────────────────
 export function ResultsDisplay({ result }: Props) {
   const [showQuestions, setShowQuestions] = useState(true)
   const [showFlags, setShowFlags] = useState(true)
+  const [showDifferential, setShowDifferential] = useState(true)
 
   const config = RECOMMENDATION_CONFIG[result.recommendation] ?? RECOMMENDATION_CONFIG.monitor
   const Icon = config.icon
@@ -387,7 +320,7 @@ export function ResultsDisplay({ result }: Props) {
         <p className="text-slate-700 leading-relaxed text-base">{result.summary}</p>
       </motion.div>
 
-      {/* Coherence (only when files uploaded) */}
+      {/* Coherence */}
       {result.coherence_score !== null && result.coherence_score !== undefined && (
         <CoherenceIndicator score={result.coherence_score} summary={result.coherence_summary} />
       )}
@@ -408,9 +341,66 @@ export function ResultsDisplay({ result }: Props) {
         </motion.div>
       )}
 
+      {/* ── DIFFERENTIAL CONSIDERATIONS — before questions ── */}
+      {result.differential_considerations?.length > 0 && (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+          className="health-card p-6 md:p-8 border"
+          style={{ background: 'hsl(210,60%,98%)', borderColor: 'hsl(210,60%,88%)' }}>
+
+          <button className="flex items-center justify-between w-full" onClick={() => setShowDifferential(v => !v)}>
+            <div className="flex items-center gap-2">
+              <FlaskConical className="w-5 h-5" style={{ color: 'hsl(210,80%,50%)' }} />
+              <h3 className="text-lg font-bold text-slate-900">
+                Az AI által azonosított lehetséges összefüggések
+              </h3>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                style={{ background: 'hsl(210,60%,90%)', color: 'hsl(210,80%,40%)' }}>
+                {result.differential_considerations.length} irány
+              </span>
+            </div>
+            {showDifferential
+              ? <ChevronUp className="w-5 h-5 text-slate-400" />
+              : <ChevronDown className="w-5 h-5 text-slate-400" />}
+          </button>
+
+          <p className="text-xs text-slate-500 mt-2 mb-4 leading-relaxed">
+            Ezek nem diagnózisok — lehetséges összefüggések, amelyeket szakorvosnak kell kizárnia
+            vagy megerősítenie. Céljuk, hogy tájékozottabb kérdésekkel jelenj meg a rendelőben.
+          </p>
+
+          <AnimatePresence>
+            {showDifferential && (
+              <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }} className="space-y-3 overflow-hidden">
+                {result.differential_considerations.map((item, i) => (
+                  <div key={i} className="p-4 bg-white rounded-xl border border-slate-100">
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white mt-0.5"
+                        style={{ background: 'hsl(210,80%,50%)' }}>
+                        {i + 1}
+                      </span>
+                      <div className="flex-1">
+                        <p className="font-bold text-slate-900 text-sm mb-1">{item.condition}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed mb-2">{item.reason}</p>
+                        <div className="flex items-center gap-1.5">
+                          <FlaskConical className="w-3.5 h-3.5 flex-shrink-0" style={{ color: 'hsl(173,80%,40%)' }} />
+                          <p className="text-xs font-medium" style={{ color: 'hsl(173,80%,40%)' }}>
+                            Kizárható: {item.how_to_exclude}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      )}
+
       {/* Red flags */}
       {result.red_flags?.length > 0 && (
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
           className="health-card p-6 md:p-8 bg-red-50 border-red-200 border">
           <button className="flex items-center justify-between w-full" onClick={() => setShowFlags(v => !v)}>
             <div className="flex items-center gap-2">
@@ -437,7 +427,7 @@ export function ResultsDisplay({ result }: Props) {
 
       {/* Questions for doctor */}
       {result.questions_to_ask?.length > 0 && (
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
           className="health-card p-6 md:p-8">
           <button className="flex items-center justify-between w-full" onClick={() => setShowQuestions(v => !v)}>
             <div className="flex items-center gap-2">
@@ -467,14 +457,14 @@ export function ResultsDisplay({ result }: Props) {
         </motion.div>
       )}
 
-      {/* Next steps: doctor search + info + print/PDF + email/lead */}
+      {/* Next steps */}
       <NextStepsPanel result={result} />
 
       {/* Disclaimer */}
       <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200">
         <p className="text-xs text-slate-500 leading-relaxed text-center">
           <strong>Fontos:</strong>{' '}
-          {result.disclaimer || 'Ez az elemzés nem helyettesíti a szakorvosi diagnózist. Minden egészségügyi döntést orvosával konzultálva hozzon meg.'}
+          {result.disclaimer || 'Ez az elemzés nem helyettesíti a szakorvosi diagnózist.'}
         </p>
       </div>
 
@@ -486,7 +476,6 @@ export function ResultsDisplay({ result }: Props) {
           <RotateCcw className="w-4 h-4" />Új elemzés indítása<ArrowRight className="w-4 h-4" />
         </Link>
       </div>
-
     </div>
   )
 }
