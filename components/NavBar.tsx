@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 const NAV_LINKS = [
   { href: '/', label: 'Főoldal' },
   { href: '/partnerek', label: 'Orvosi Partnerek' },
+  { href: '/blog', label: 'Blog' },
   { href: '/adatvedelem', label: 'Adatvédelem' },
 ]
 
