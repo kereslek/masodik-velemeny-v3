@@ -203,6 +203,50 @@ export default function VerekepPage() {
             </div>
           </div>
 
+          {/* ── All 3 pages of the anonymized lab result ── */}
+          <div className="mb-10 space-y-5">
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className="text-lg font-bold text-slate-900">Anonimizált laborlelet — valós példa (3 oldal)</h3>
+            </div>
+            <div className="flex items-start gap-3 p-4 rounded-2xl border"
+              style={{ background: 'hsl(210,60%,97%)', borderColor: 'hsl(210,60%,88%)' }}>
+              <span className="text-xl flex-shrink-0">🔒</span>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                <strong>Anonimizálásról:</strong> Az alábbi lelet valós vérvizsgálat alapján készült.
+                Minden személyazonosításra alkalmas adat eltávolítva: páciens neve, TAJ-szám,
+                születési dátum, lakcím, orvos neve, laborazonosító és a laboratórium neve.
+                Pontosan ezt végzi el automatikusan a <strong>Diagnózisom.hu</strong> is
+                az általad feltöltött dokumentumokon — GDPR szerint, mielőtt az AI látja.
+              </p>
+            </div>
+
+            {[
+              { src: '/blog/verekep-pelda-p1.png', label: '1. oldal — Hematológia (vérkép)', alt: 'Anonimizált laborlelet 1. oldal hematológia' },
+              { src: '/blog/verekep-pelda-p2.png', label: '2. oldal — Klinikai kémia (koleszterin, kreatinin, enzimek)', alt: 'Anonimizált laborlelet 2. oldal klinikai kémia' },
+              { src: '/blog/verekep-pelda-p3.png', label: '3. oldal — Vizeletvizsgálat', alt: 'Anonimizált laborlelet 3. oldal vizeletvizsgálat' },
+            ].map((pg, idx) => (
+              <div key={pg.src}>
+                <p className="text-xs font-semibold text-slate-600 mb-2 flex items-center gap-2">
+                  <span className="inline-flex w-5 h-5 rounded-full items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                    style={{ background: 'hsl(173,80%,40%)' }}>
+                    {idx + 1}
+                  </span>
+                  {pg.label}
+                </p>
+                <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+                  <Image
+                    src={pg.src}
+                    alt={pg.alt}
+                    width={900}
+                    height={1272}
+                    className="w-full h-auto"
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
           <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Hematológia — a vérkép értékei</h2>
           <p className="text-slate-600 mb-6 text-sm leading-relaxed">
             A hematológiai rész a vér sejtjeit vizsgálja. Nézzük meg sorban az értékeket és
