@@ -54,7 +54,7 @@ export function NavBar() {
               </Link>
             ))}
             <a
-              href="#elemzes"
+              href="/#elemzes"
               className="ml-4 px-6 py-2.5 health-button btn-primary text-sm"
               aria-label="Elemzés indítása — orvosi második vélemény kérése"
             >
@@ -94,7 +94,7 @@ export function NavBar() {
             </Link>
           ))}
           <a
-            href="#elemzes"
+            href="/#elemzes"
             onClick={() => setMenuOpen(false)}
             className="mt-2 px-4 py-3 bg-[hsl(173,80%,40%)] text-white rounded-2xl font-bold text-center shadow-lg"
           >

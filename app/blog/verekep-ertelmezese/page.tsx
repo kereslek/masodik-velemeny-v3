@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     'Közérthetően elmagyarázzuk a vérkép összes értékét: hemoglobin, fehérvérsejtszám, trombocita, MCV, CRP és még sok más. Valódi, anonimizált laborlelet alapján. Töltsd fel a sajátodat és kapj AI magyarázatot.',
   keywords: [
     'vérkép értelmezése',
+    'vérkép értelmezés magyarul',
+    'vérkép normál értékek 2025',
+    'vérkép eltérések magyarázat',
     'vérkép magyarázat',
     'laboreredmény értelmezés',
     'hemoglobin mit jelent',
@@ -469,6 +472,21 @@ export default function VerekepPage() {
             mindig a klinikai kép és a tünetek ismeretében történhet csak helyesen.
             Ha aggasztó eltérést találsz a leletedben, fordulj kezelőorvosodhoz.
           </p>
+        </div>
+
+        {/* SEO keyword tags */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {[
+            'vérkép értelmezése','laboreredmény magyarázat','hemoglobin','fehérvérsejt',
+            'limfocita magas','kreatinin magas','eGFR vesefunkció','gamma GT magas',
+            'koleszterin','Anti-TPO Hashimoto','pajzsmirigy antitest','húgysav köszvény',
+            'orvosi lelet magyarázat','AI vérkép elemzés','második vélemény',
+          ].map(tag => (
+            <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium"
+              style={{ background: 'hsl(173,80%,93%)', color: 'hsl(173,80%,35%)' }}>
+              #{tag.replace(/ /g, '')}
+            </span>
+          ))}
         </div>
 
         {/* Big CTA */}

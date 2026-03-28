@@ -60,9 +60,10 @@ function CoherenceIndicator({ score, summary }: { score: number; summary: string
 
 // ── Email results panel (Option A: simple, private) ────────────────────────────
 function EmailResultsPanel({ result }: { result: AnalysisResult }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const [email, setEmail] = useState('')
   const [wantsContact, setWantsContact] = useState(false)
+  const [wantsNewsletter, setWantsNewsletter] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
@@ -82,6 +83,7 @@ function EmailResultsPanel({ result }: { result: AnalysisResult }) {
           email,
           result,
           wants_contact: wantsContact,
+          wants_newsletter: wantsNewsletter,
           name: wantsContact ? name : undefined,
           phone: wantsContact ? phone : undefined,
         }),
@@ -122,6 +124,7 @@ function EmailResultsPanel({ result }: { result: AnalysisResult }) {
                   <p className="text-sm text-slate-500">
                     Az elemzés megérkezett a postaládádba.
                     {wantsContact && ' Orvosi partnerünk hamarosan felveszi veled a kapcsolatot.'}
+                    {wantsNewsletter && ' Feliratkoztál a hírlevélre.'}
                   </p>
                 </div>
               ) : (
@@ -148,6 +151,24 @@ function EmailResultsPanel({ result }: { result: AnalysisResult }) {
                       <p className="text-sm font-semibold text-slate-800">Orvosi szakember hívjon fel</p>
                       <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
                         Egy regisztrált orvosi partnerünk felveszi veled a kapcsolatot. GDPR szerint kezeljük az adataidat.
+                      </p>
+                    </div>
+                  </label>
+
+                  {/* Newsletter opt-in */}
+                  <label className="flex items-start gap-3 cursor-pointer p-3 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors">
+                    <div className="relative flex-shrink-0 mt-0.5">
+                      <input type="checkbox" checked={wantsNewsletter}
+                        onChange={e => setWantsNewsletter(e.target.checked)} className="sr-only" />
+                      <div className={cn('w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all',
+                        wantsNewsletter ? 'border-[hsl(173,80%,40%)] bg-[hsl(173,80%,40%)]' : 'border-slate-300 bg-white')}>
+                        {wantsNewsletter && <CheckCircle className="w-3 h-3 text-white" />}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800">Feliratkozom a hírlevélre</p>
+                      <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                        Egészségügyi tippeket, cikkeket és értesítőket küldünk. Bármikor leiratkozhatsz.
                       </p>
                     </div>
                   </label>
@@ -188,8 +209,9 @@ function EmailResultsPanel({ result }: { result: AnalysisResult }) {
                   </button>
 
                   <p className="text-xs text-slate-400 text-center leading-relaxed">
-                    GDPR: az email kizárólag az elemzés kézbesítésére szolgál. Egészségügyi adatot nem tárolunk.
+                    GDPR: adataidat biztonságosan kezeljük. Egészségügyi adatot nem tárolunk.
                     {wantsContact && ' A kapcsolatfelvételi adatokat titkosítva tároljuk.'}
+                    {wantsNewsletter && ' Hírlevélről bármikor leiratkozhatsz.'}
                   </p>
                 </>
               )}
