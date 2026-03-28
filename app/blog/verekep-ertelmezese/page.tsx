@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, AlertTriangle, CheckCircle2, Info, FlaskConical } from 'lucide-react'
 
 export const metadata: Metadata = {
