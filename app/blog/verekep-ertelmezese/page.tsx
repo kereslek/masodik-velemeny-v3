@@ -377,6 +377,90 @@ export default function VerekepPage() {
           </div>
         </section>
 
+        {/* ── Second case study ── */}
+        <section className="mb-10">
+          <h2 className="text-2xl font-extrabold text-slate-900 mb-4">
+            2. eset: 44 éves nő — pajzsmirigy antitestek és több eltérő érték
+          </h2>
+
+          <div className="health-card p-5 mb-5 border-l-4" style={{ borderLeftColor: 'hsl(210,80%,50%)' }}>
+            <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-slate-700">
+              <span><strong>Fiktív páciens:</strong> Kovács Éva</span>
+              <span><strong>Kor:</strong> 44 év</span>
+              <span><strong>Nem:</strong> Nő</span>
+              <span><strong>Panasz:</strong> Fáradékonyság, hajhullás, hidegérzet</span>
+              <span><strong>Mintavétel:</strong> 2026. március</span>
+            </div>
+            <p className="text-xs text-slate-400 mt-2">* A személyes adatok kitaláltak. A laborértékek valós, anonimizált vizsgálat alapján készültek.</p>
+          </div>
+
+          <div className="space-y-4 mb-7">
+            {[
+              { src: '/blog/verekep-pelda2-p1.jpg', label: '1. oldal — Hematológia és klinikai kémia', alt: '44 éves nő laborlelete 1. oldal hematológia klinikai kémia' },
+              { src: '/blog/verekep-pelda2-p2.jpg', label: '2. oldal — Immunkémia, pajzsmirigy, tumormarker, vizelet', alt: '44 éves nő laborlelete 2. oldal pajzsmirigy antitestek immunkémia' },
+            ].map((pg, idx) => (
+              <div key={pg.src}>
+                <p className="text-xs font-semibold text-slate-600 mb-2 flex items-center gap-2">
+                  <span className="inline-flex w-5 h-5 rounded-full items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                    style={{ background: 'hsl(210,80%,50%)' }}>
+                    {idx + 1}
+                  </span>
+                  {pg.label}
+                </p>
+                <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+                  <Image src={pg.src} alt={pg.alt} width={1000} height={1910} className="w-full h-auto" loading="lazy" />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="text-xl font-bold text-slate-900 mb-4">A legfontosabb eltérések magyarázata</h3>
+
+          <div className="health-card p-6 mb-4 border-l-4" style={{ borderLeftColor: 'hsl(0,84%,60%)' }}>
+            <h4 className="font-bold text-slate-900 mb-2">🦋 Anti-TPO ▲ 141,74 IU/ml (normál: 0–5,61) — Hashimoto thyreoiditis?</h4>
+            <p className="text-slate-600 text-sm leading-relaxed mb-2">
+              Ez a lelet messze legfontosabb eltérése. Az Anti-TPO (thyroid peroxidáz antitest) értéke
+              <strong> 25-szöröse a normálnak</strong> — ez a <strong>Hashimoto-thyreoiditis</strong> klasszikus
+              markere, egy autoimmun pajzsmirigy-gyulladás, amelyben a szervezet saját pajzsmirígyét
+              idegennek ismeri fel. A Thyreoglobulin elleni antitest is emelkedett (14,55, ref: 0–4,11),
+              ami megerősíti az autoimmun folyamatot. Fontos: a TSH, FT3 és FT4 értékek <em>normálisak</em> —
+              tehát a pajzsmirigy még jól működik, de az antitestek jelenléte hosszú távon hypothyreosisba fejlődhet.
+            </p>
+            <p className="text-xs text-slate-400">Következő lépés: endokrinológus, pajzsmirigy ultrahang, rendszeres TSH kontroll</p>
+          </div>
+
+          <div className="health-card p-6 mb-4 border-l-4" style={{ borderLeftColor: 'hsl(38,92%,50%)' }}>
+            <h4 className="font-bold text-slate-900 mb-2">🦠 Baktérium a vizeletben ▲ 90/HPF (normál: 0–60)</h4>
+            <p className="text-slate-600 text-sm leading-relaxed mb-2">
+              A vizelet baktériumszám enyhén emelkedett. Ha égő érzés, gyakori vizelés vagy láz kíséri,
+              húgyúti fertőzés (cystitis) valószínű és antibiotikum szükséges. Tünetek nélkül nőknél
+              az aszimptomatikus bakteriúria néha nem igényel kezelést — de orvosi döntést igényel.
+            </p>
+            <p className="text-xs text-slate-400">Következő lépés: vizelet tenyésztés, háziorvos konzultáció</p>
+          </div>
+
+          <div className="health-card p-6 mb-4 border-l-4" style={{ borderLeftColor: 'hsl(173,80%,40%)' }}>
+            <h4 className="font-bold text-slate-900 mb-2">✓ Ami megnyugtató ebben a leletben</h4>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              A vércukor, HbA1c és HOMA-index kiválóak — nincs cukorbetegség vagy inzulinrezisztencia.
+              A CA 125 tumormarker normális. A máj enzimek (GOT, GPT, GGT), a koleszterin értékek,
+              a vesefunkció (eGFR &gt;90) mind rendben vannak. A CRP alacsony — nincs szisztémás gyulladás.
+              Az immunoglobulinok (IgA, IgG, IgM) mind normálisak.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl border" style={{ background: 'hsl(38,92%,98%)', borderColor: 'hsl(38,92%,80%)' }}>
+            <p className="text-sm text-slate-700 leading-relaxed">
+              <strong>Összefoglalás:</strong> A fáradékonyság, hajhullás és hidegérzet tünetek
+              melletti <strong>masszívan emelkedett Anti-TPO</strong> erősen Hashimoto-thyreoiditisre utal.
+              Annak ellenére, hogy a pajzsmirigy funkció most normális, rendszeres endokrinológiai
+              követés szükséges — az állapot évek alatt hypothyreosisba fejlődhet, amelyhez
+              hormonpótló kezelés szükséges. Ez egy tipikus eset, ahol az AI azonnal felismeri
+              a mintát és konkrét, releváns vizsgálatot javasol.
+            </p>
+          </div>
+        </section>
+
         {/* Disclaimer */}
         <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 mb-10">
           <p className="text-xs text-slate-500 leading-relaxed">
